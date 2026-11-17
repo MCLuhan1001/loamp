@@ -32,9 +32,16 @@ Die Pegelanzeige ist keine Dekoration, sondern arbeitet vollständig im Echtzeit
 
 ---
 
-## Installation & Start
+## Installation & Nutzung (Mac & iPad)
 
-### Dauerhafter Hintergrunddienst (empfohlen)
+### Online / Teilen über GitHub Pages (für alle Mac- & iPad-Nutzer)
+- **Web-App-Link:** https://ytr4t4nhvh-boop.github.io/loamp/
+- **Repository:** https://github.com/ytr4t4nhvh-boop/loamp
+- **iPad / iPhone (Safari):** Link öffnen → **Teilen** → **„Zum Home-Bildschirm“**. Startet im Vollbild ohne Safari-Leisten und funktioniert dank Service Worker (`loamp-v3`) auch offline. Audiodateien werden über **„Dateien …“** oder per Split-View-Drag-&-Drop aus der *Dateien*-App geladen.
+- **Mac (Safari / Chrome):** Link öffnen → in Safari **„Ablage › Zum Dock hinzufügen“** bzw. in Chrome **„App installieren“**.
+- **Datenschutz:** Audiodateien werden ausschließlich lokal per `URL.createObjectURL()` im Browser verarbeitet und verlassen niemals das Gerät.
+
+### Lokaler Hintergrunddienst auf diesem Mac (optional)
 Der lokale Server wird als macOS-`LaunchAgent` (`com.loamp.server`) nach `~/Library/Application Support/LoAmp` installiert (damit macOS-Ordnerschutzregeln für `~/Documents` den Hintergrunddienst nicht blockieren) und lauscht ausschließlich lokal auf `127.0.0.1:8420`:
 
 ```zsh
@@ -62,7 +69,7 @@ python3 serve.py 8420
 | `app.js` | Wiedergabe-Engine, Playlist/Drop-Logik, Web-Audio-Graph, Canvas-VU-Zeichnung, Shortcuts |
 | `meter-worklet.js` | `AudioWorkletProcessor` für VU-Ballistik (2. Ordnung) und 4×-True-Peak-Messung |
 | `manifest.webmanifest` | PWA-Metadaten, Icons, `file_handlers` |
-| `sw.js` | Service Worker (`loamp-v2`, Network-First mit Offline-Cache-Fallback) |
+| `sw.js` | Service Worker (`loamp-v3`, Network-First mit Offline-Cache-Fallback) |
 | `serve.py` / `start.command` | Lokaler Python-HTTP-Server (nur `127.0.0.1`) und Doppelklick-Starter |
 | `autostart.sh` | macOS-LaunchAgent-Installer (`~/Library/LaunchAgents/com.loamp.server.plist`) |
 | `make_icons.py` / `icons/` | Generiert App-Icons (`icon.svg`, `192`, `512`, `maskable`, `apple-touch-icon`) via Headless-Chrome |
@@ -90,3 +97,6 @@ Geprüft werden: Sinus-RMS-Kalibrierung, 300 ms VU-Ballistik und Überschwingen,
    - Ersetzen von `ChannelSplitterNode` + einfachem `AnalyserNode` durch ein dediziertes `AudioWorklet` (`meter-worklet.js`) mit echter ANSI/IEC-VU-Ballistik, 4×-Oversampling-True-Peak (ITU-R BS.1770 / EBU R128 `−1 dBTP`-Warnung), umschaltbaren Bezugspegeln (`−18 / −20 / −14 dBFS`) und Reparatur des rechten VU-Meters bei Mono- sowie einseitig stummen Quellen.
    - Behebung des abgeschnittenen unteren Gehäuserahmens bei flach zusammengeschobenen Fenstern durch Entfernen von `min-height: 30rem` / `min-height: 8rem`, Umstellung auf `container: cabinet / size`, Topteil-Kompaktmodus bei niedriger Höhe und Erweiterung der fließenden Skalierung nach unten (`8px`–`20px`).
    - Ergänzung der Unit-Tests (`tests/meter.test.js`), Bereinigung von `unloadAudio()`/`resetPeak()` und Aktualisierung von `sw.js` sowie `autostart.sh`.
+4. **GitHub Pages & iPadOS-Unterstützung (v3):**
+   - Einrichtung der GitHub CLI (`gh` 2.104.0 unter `~/.local/gh`), Anlegen des öffentlichen GitHub-Repositories `ytr4t4nhvh-boop/loamp` und Aktivierung von **GitHub Pages** (`https://ytr4t4nhvh-boop.github.io/loamp/`).
+   - Ergänzung der Apple-PWA-Meta-Tags (`apple-mobile-web-app-capable`, `black-translucent`) in `index.html`, `touch-action: none` für Slider in `styles.css`, automatisches Ausblenden des auf iPadOS nicht unterstützten „Ordner …“-Buttons in `app.js` sowie Cache-Bump auf `loamp-v3` in `sw.js`.
