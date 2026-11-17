@@ -1,5 +1,5 @@
 /* LoAmp Service Worker – Netzwerk zuerst, Cache als Offline-Fallback */
-const CACHE = 'loamp-v2';
+const CACHE = 'loamp-v3';
 const ASSETS = [
   './', 'index.html', 'styles.css', 'app.js', 'meter-worklet.js', 'manifest.webmanifest',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',

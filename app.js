@@ -377,6 +377,9 @@ addEventListener('drop', async (e) => {
 $('#addFiles').addEventListener('click', () => el.filePicker.click());
 $('#openCompact')?.addEventListener('click', () => el.filePicker.click());
 $('#addFolder').addEventListener('click', () => el.folderPicker.click());
+if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+  $('#addFolder').hidden = true;
+}
 el.filePicker.addEventListener('change', () => { addFiles(el.filePicker.files, { playFirst: !cur() }); el.filePicker.value = ''; });
 el.folderPicker.addEventListener('change', () => { addFiles(el.folderPicker.files, { playFirst: !cur() }); el.folderPicker.value = ''; });
 
