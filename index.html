@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LoAmp</title>
+  <meta name="description" content="LoAmp – Audioplayer im Stil klassischer Röhrenverstärker">
+  <meta name="theme-color" content="#0d0c0b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="amp" id="amp">
+    <div class="cabinet">
+
+      <!-- Kopfteil: Schriftzug + Pilotlampe -->
+      <header class="head">
+        <span class="screw" aria-hidden="true"></span>
+        <div class="brand">
+          <h1 class="logo">LoAmp</h1>
+          <p class="badge">Hi-Fi Audio Player <i>·</i> Model 30</p>
+        </div>
+        <div class="pilot" id="pilot" title="Betriebsanzeige" aria-hidden="true"></div>
+        <span class="screw" aria-hidden="true"></span>
+      </header>
+
+      <!-- Chrom-Bedienfeld -->
+      <section class="panel" aria-label="Bedienfeld">
+        <div class="display" aria-live="off">
+          <div class="d-title" id="title">Kein Titel geladen</div>
+          <div class="d-row">
+            <span id="time">00:00 / 00:00</span>
+            <button type="button" class="peak" id="peak" title="Maximaler True-Peak nach ITU-R BS.1770 (Warnung ab −1 dBTP · Klick setzt zurück)">TP --</button>
+            <span id="pos">-- / --</span>
+          </div>
+          <input type="range" id="seek" class="seek" min="0" max="1000" step="1" value="0" aria-label="Position" disabled>
+        </div>
+
+        <div class="meters" aria-label="Pegelanzeige">
+          <div class="vu"><canvas id="vuL" aria-label="Pegel links"></canvas></div>
+          <div class="vu"><canvas id="vuR" aria-label="Pegel rechts"></canvas></div>
+        </div>
+
+        <div class="controls">
+          <div class="transport" role="group" aria-label="Wiedergabe">
+            <button class="key" id="prev" title="Vorheriger Titel (P)" aria-label="Vorheriger Titel">
+              <svg viewBox="0 0 24 24"><path d="M6 5h2.5v14H6zM20 5v14L9.5 12z"/></svg>
+            </button>
+            <button class="key" id="rew" title="Zurückspulen (Klick: −10 s, halten: schnell)" aria-label="Zurückspulen">
+              <svg viewBox="0 0 24 24"><path d="M11.5 5v14L2 12zM22 5v14l-9.5-7z"/></svg>
+            </button>
+            <button class="key play" id="play" title="Wiedergabe / Pause (Leertaste)" aria-label="Wiedergabe">
+              <svg class="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="i-pause" viewBox="0 0 24 24"><path d="M6 4.5h4.2v15H6zM13.8 4.5H18v15h-4.2z"/></svg>
+            </button>
+            <button class="key" id="stop" title="Stopp" aria-label="Stopp">
+              <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+            </button>
+            <button class="key" id="ffw" title="Vorspulen (Klick: +10 s, halten: schnell)" aria-label="Vorspulen">
+              <svg viewBox="0 0 24 24"><path d="M12.5 5v14L22 12zM2 5v14l9.5-7z"/></svg>
+            </button>
+            <button class="key" id="next" title="Nächster Titel (N)" aria-label="Nächster Titel">
+              <svg viewBox="0 0 24 24"><path d="M15.5 5H18v14h-2.5zM4 5v14l10.5-7z"/></svg>
+            </button>
+          </div>
+
+          <div class="mix">
+            <button class="key tog" id="shuffle" aria-pressed="false" title="Zufallswiedergabe">
+              <span class="led"></span><span class="lbl">Zufall</span>
+            </button>
+            <button class="key tog" id="repeat" aria-pressed="false" title="Wiederholen: aus / alle / Titel">
+              <span class="led"></span><span class="lbl" id="repeatLbl">Wdh. aus</span>
+            </button>
+            <button class="key tog" id="ref" type="button" title="Bezugspegel umschalten: −18 dBFS (EBU R68) / −20 dBFS (SMPTE) / −14 dBFS (Musik)">
+              <span class="lbl" id="refLbl">0 VU −18</span>
+            </button>
+            <button class="key tog compact-only" id="openCompact" type="button" title="Audiodateien hinzufügen">
+              <span class="lbl">Dateien …</span>
+            </button>
+            <div class="vol">
+              <span class="eng">Volume</span>
+              <input type="range" id="volume" class="volume" min="0" max="1" step="0.01" value="0.7" aria-label="Lautstärke">
+              <output id="volOut" for="volume">7.0</output>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diamant-Gitterbespannung = Playlist + Drop-Zone -->
+      <section class="grille" id="drop" aria-label="Wiedergabeliste">
+        <div class="list-head">
+          <span class="eng" id="count">0 Titel</span>
+          <span class="spacer"></span>
+          <button class="key mini" id="addFiles" type="button">Dateien …</button>
+          <button class="key mini" id="addFolder" type="button">Ordner …</button>
+          <button class="key mini" id="clear" type="button">Leeren</button>
+        </div>
+        <ol class="list" id="list"></ol>
+        <div class="empty" id="empty">
+          <p class="script">Audio hier ablegen</p>
+          <p class="fmt">MP3 · AAC · M4A · WAV · FLAC · OGG · OPUS · AIFF</p>
+          <p class="hint">Mehrere Dateien oder ganze Ordner – auf das Fenster ziehen</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="veil" aria-hidden="true"><span class="script">Loslassen zum Abspielen</span></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <input type="file" id="filePicker" multiple hidden
+         accept="audio/*,.mp3,.m4a,.m4b,.aac,.wav,.flac,.ogg,.oga,.opus,.aif,.aiff,.aifc,.caf,.weba">
+  <input type="file" id="folderPicker" webkitdirectory multiple hidden>
+</body>
+</html>
