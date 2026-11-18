@@ -1,7 +1,8 @@
 /* LoAmp Service Worker – Netzwerk zuerst, Cache als Offline-Fallback */
-const CACHE = 'loamp-v3';
+const CACHE = 'loamp-v4';
 const ASSETS = [
   './', 'index.html', 'styles.css', 'app.js', 'meter-worklet.js', 'manifest.webmanifest',
+  'fonts/great-vibes-latin-400.woff2', 'fonts/playfair-display-latin-700.woff2', 'fonts/playfair-display-latin-700-italic.woff2',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
   'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png',
 ];

@@ -12,8 +12,8 @@ case "$1" in
   install)
     mkdir -p "$APP" "$HOME/Library/LaunchAgents"
     # Kopie außerhalb von ~/Documents, damit macOS-Datenschutz den Dienst nicht blockiert
-    rm -rf "$APP/icons"
-    cp -R "$SRC/icons" "$SRC/index.html" "$SRC/styles.css" "$SRC/app.js" "$SRC/meter-worklet.js" \
+    rm -rf "$APP/icons" "$APP/fonts"
+    cp -R "$SRC/icons" "$SRC/fonts" "$SRC/index.html" "$SRC/styles.css" "$SRC/app.js" "$SRC/meter-worklet.js" \
           "$SRC/sw.js" "$SRC/manifest.webmanifest" "$SRC/serve.py" "$APP/"
     cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>

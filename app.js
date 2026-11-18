@@ -542,7 +542,7 @@ function drawMeter(m) {
   g.beginPath(); g.arc(cx, py, R * 0.885, th(f0), th(fp)); g.stroke();
 
   const major = [-20, -10, -7, -5, -3, 0, 1, 2, 3];
-  g.font = `600 ${h * 0.105}px "Didot","Bodoni 72",Georgia,serif`;
+  g.font = `600 ${h * 0.105}px "Didot","Bodoni 72","Playfair Display",Georgia,serif`;
   g.textAlign = 'center'; g.textBaseline = 'middle';
   for (let db = -20; db <= 3; db += db < -10 ? 2 : 1) {
     const isMaj = major.includes(db), f = dbFrac(db);
@@ -559,9 +559,9 @@ function drawMeter(m) {
 
   // Beschriftung
   g.fillStyle = 'rgba(42,28,8,.8)';
-  g.font = `italic 700 ${h * 0.2}px "Didot","Bodoni 72",Georgia,serif`;
+  g.font = `italic 700 ${h * 0.2}px "Didot","Bodoni 72","Playfair Display",Georgia,serif`;
   g.fillText('VU', cx, h * 0.5);
-  g.font = `700 ${h * 0.09}px "Didot",Georgia,serif`;
+  g.font = `700 ${h * 0.09}px "Didot","Playfair Display",Georgia,serif`;
   g.textAlign = 'left'; g.fillText(m.label, w * 0.06, h * 0.86);
 
   // True-Peak-Lampe (> −1 dBTP)
@@ -626,6 +626,7 @@ paintRange(el.seek);
 renderList();
 paintPeak();
 sizeMeters();
+document.fonts?.ready.then(() => kick(true));
 audio.addEventListener('timeupdate', () => kick());
 audio.addEventListener('seeked', () => kick(true));
 

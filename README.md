@@ -69,7 +69,8 @@ python3 serve.py 8420
 | `app.js` | Wiedergabe-Engine, Playlist/Drop-Logik, Web-Audio-Graph, Canvas-VU-Zeichnung, Shortcuts |
 | `meter-worklet.js` | `AudioWorkletProcessor` für VU-Ballistik (2. Ordnung) und 4×-True-Peak-Messung |
 | `manifest.webmanifest` | PWA-Metadaten, Icons, `file_handlers` |
-| `sw.js` | Service Worker (`loamp-v3`, Network-First mit Offline-Cache-Fallback) |
+| `sw.js` | Service Worker (`loamp-v4`, Network-First mit Offline-Cache-Fallback) |
+| `fonts/` | Lokale WOFF2-Webfonts (*Great Vibes*, *Playfair Display*) für Windows/Linux |
 | `serve.py` / `start.command` | Lokaler Python-HTTP-Server (nur `127.0.0.1`) und Doppelklick-Starter |
 | `autostart.sh` | macOS-LaunchAgent-Installer (`~/Library/LaunchAgents/com.loamp.server.plist`) |
 | `make_icons.py` / `icons/` | Generiert App-Icons (`icon.svg`, `192`, `512`, `maskable`, `apple-touch-icon`) via Headless-Chrome |

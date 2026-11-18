@@ -1,4 +1,26 @@
 /* LoAmp – Tolex, Chrom, Gold und Diamantgitter */
+@font-face {
+  font-family: "Great Vibes";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/great-vibes-latin-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("fonts/playfair-display-latin-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Playfair Display";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/playfair-display-latin-700-italic.woff2") format("woff2");
+}
+
 :root {
   color-scheme: dark;
   --gold: #d9b765;
@@ -8,8 +30,8 @@
   --ink: #23211d;
   --amber: #ffb23f;
   --red: #e0342b;
-  --serif: "Didot", "Bodoni 72", "Playfair Display", "Hoefler Text", Georgia, serif;
-  --script: "Snell Roundhand", "Apple Chancery", "Brush Script MT", "Lucida Handwriting", cursive;
+  --serif: "Didot", "Bodoni 72", "Playfair Display", Georgia, serif;
+  --script: "Snell Roundhand", "Apple Chancery", "Great Vibes", "Brush Script MT", "Lucida Handwriting", cursive;
   --mono: "SF Mono", ui-monospace, Menlo, monospace;
   --chrome: linear-gradient(180deg, #fdfdfd 0%, #d9dde1 42%, #9aa0a7 50%, #c4c8cd 78%, #e9ecef 100%);
   --brushed: repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 1px, rgba(0,0,0,.05) 1px 2px, rgba(255,255,255,.04) 2px 3px);
@@ -74,6 +96,7 @@ body {
   font-family: var(--script);
   font-weight: 700;
   font-size: 3.3rem;
+  font-size-adjust: from-font;
   line-height: 1.15;
   padding: 0 .35em .08em .1em;
   letter-spacing: .01em;
@@ -86,6 +109,7 @@ body {
 .badge {
   font-family: var(--serif);
   font-size: .72rem;
+  font-size-adjust: from-font;
   letter-spacing: .32em;
   text-transform: uppercase;
   color: var(--gold);
@@ -154,6 +178,7 @@ body {
 .eng {
   font-family: var(--serif);
   font-size: .7rem;
+  font-size-adjust: from-font;
   font-weight: 700;
   letter-spacing: .22em;
   text-transform: uppercase;
